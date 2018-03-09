@@ -1,0 +1,3 @@
+[submodule "HPK"]
+	path = HPK
+	url = https://github.com/ThomasKraaibeek/HPK.git
