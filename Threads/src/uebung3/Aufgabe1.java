@@ -17,23 +17,23 @@ class SemaphoreJava<T> implements ResourcePool<T> {
 	@SafeVarargs
 	public SemaphoreJava(T... ts) {
 		resourcePool = new ArrayList<T>(Arrays.asList(ts));
-		sem = new Semaphore(resourcePool.size());
+		sem = new Semaphore(resourcePool.size(), true);
 	}
 
 	@Override
-	public synchronized void release(T resource) {
+	public void release(T resource) {
 		sem.release();
 		resourcePool.add(resource);
 	}
 
 	@Override
-	public synchronized T require() {
+	public T require() {
 		try {
 			sem.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return resourcePool.remove(resourcePool.size() - 1);
+		return resourcePool.remove(sem.availablePermits());
 	}
 
 	@Override
@@ -62,6 +62,7 @@ class SemaphoreManual<T> implements ResourcePool<T> {
 	public synchronized void release(T resource) {
 		size++;
 		resourcePool.add(resource);
+		notify();
 	}
 
 	@Override
@@ -106,15 +107,15 @@ public class Aufgabe1<T> implements Runnable {
 		System.out.println("now using the java semaphore implementation. every thread will hold a resource 2 times for 5 seconds. between both it will sleep for 1 second. using 8 threads.");
 		for (Thread t: tsJava) t.start();
 		for (Thread t: tsJava) try { t.join(); } catch (InterruptedException e) { e.printStackTrace(); }
-		javaTime = (System.nanoTime() - javaTime) / 1000000;
+		javaTime = (System.nanoTime() - javaTime);
 		
 		long manualTime = System.nanoTime();
 		System.out.println("now using the self-programmed semaphore implementation. every thread will hold a resource 2 times for 5 seconds. between both it will sleep for 1 second. using 8 threads.");
 		for (Thread t: tsManual) t.start();
 		for (Thread t: tsManual) try { t.join(); } catch (InterruptedException e) { e.printStackTrace(); }
-		manualTime = (System.nanoTime() - manualTime) / 1000000;
+		manualTime = (System.nanoTime() - manualTime);
 		
-		System.out.println("java needed " + javaTime + " whereas the self-programmed method needed " + manualTime + ". difference is " + Math.abs(javaTime - manualTime));
+		System.out.println("java needed " + javaTime + " ns whereas the self-programmed method needed " + manualTime + " ns. difference is " + Math.abs(javaTime - manualTime) + " ns.");
 	}
 
 	@Override
@@ -123,7 +124,7 @@ public class Aufgabe1<T> implements Runnable {
 			long start = System.nanoTime();
 			System.out.println(Thread.currentThread() + ": REQUIRING RESOUCE...");
 			T resource = sem.require();
-			System.out.println(Thread.currentThread() + ": RESOURCE RECEIVED\t\tTIME ELAPSED: " + (System.nanoTime() - start)/1000000 + " ns");
+			System.out.println(Thread.currentThread() + ": RESOURCE RECEIVED\tTIME ELAPSED: " + (System.nanoTime() - start) + " ns");
 			try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
 
 			sem.release(resource);
