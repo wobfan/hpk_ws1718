@@ -56,6 +56,7 @@ public class Aufgabe2 extends Aufgabe1 {
 		System.out.println(fooList);
 		System.out.println(barList);
 		System.out.println(mixList);
+		// TODO fields arent generated correctly, as it's an array of nulls currently	
 //		for (Buh b: mixField) System.out.print(b + " ");
 		
 		Stream mixListStream = mixList.stream();
