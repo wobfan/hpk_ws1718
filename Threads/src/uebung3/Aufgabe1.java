@@ -33,7 +33,7 @@ class SemaphoreJava<T> implements ResourcePool<T> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return resourcePool.remove(sem.availablePermits());
+		return resourcePool.remove(size() + 1);
 	}
 
 	@Override
