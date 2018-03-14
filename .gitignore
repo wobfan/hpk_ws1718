@@ -1,1 +1,4 @@
 /.metadata/
+.project
+.cproject
+language.settings.xml
