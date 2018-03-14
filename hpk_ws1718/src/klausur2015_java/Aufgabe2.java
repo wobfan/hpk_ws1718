@@ -12,10 +12,10 @@ public class Aufgabe2 {
 		List v0 = new ArrayList();
 		List v1 = new ArrayList<Vehicle>();
 		List<Vehicle> v2 = new ArrayList<Vehicle>();
-		List<Car> v3 = new ArrayList<Vehicle>();
-		List<Vehicle> v4 = new ArrayList<Car>();
+//		List<Car> v3 = new ArrayList<Vehicle>();		->	Compiler Error
+//		List<Vehicle> v4 = new ArrayList<Car>();		->	Compiler Error
 		List<?> v5 = new ArrayList<Car>();
-		List<Car> v6 = new ArrayList<?>;
+//		List<Car> v6 = new ArrayList<?>;				->	Compiler Error
 	} 
 	
 	public static void a2() {
@@ -29,8 +29,8 @@ public class Aufgabe2 {
 	
 	public static void a3() {
 		List<?> v = new ArrayList<Vehicle>();
-		v.add(new Boat());
-		v.add(new Car());
+//		v.add(new Boat());				->	Compiler Error
+//		v.add(new Car());				-> 	Compiler Error
 		Boat b = (Boat) v.get(0);
 		Car c = (Car) v.get(1);
 	}
@@ -38,7 +38,7 @@ public class Aufgabe2 {
 	public static void a4() {
 		List<? extends Vehicle> v1 = new ArrayList<Vehicle>();
 		List<? super Vehicle> v2 = new ArrayList<Vehicle>();
-		v1.add(new Boat());
+//		v1.add(new Boat());				-> Compiler Error
 		v2.add(new Car());
 		Vehicle b = v1.get(0);
 		Car c = (Car) v2.get(0);
