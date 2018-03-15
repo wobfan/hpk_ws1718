@@ -15,6 +15,9 @@ public class Aufgabe1 {
 	
 	public static <T> T[] createArray(Class<T> type, int n) throws Exception {
 		T[] array = (T[]) Array.newInstance(type, n);
+		for(int i = 0; i < array.length; i++) {
+			array[i] = type.newInstance();
+		}
 		return array;
 	}
 

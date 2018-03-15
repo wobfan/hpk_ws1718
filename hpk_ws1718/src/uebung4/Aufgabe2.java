@@ -32,8 +32,13 @@ class Foo extends Buh implements Comparable<Foo> {
 	}
 }
 
-class Bar extends Buh {
+class Bar extends Buh implements Comparable<Bar> {
 
+	@Override
+	public int compareTo(Bar that) {
+		return this.id.compareTo(that.id);
+	}
+	
 }
 
 public class Aufgabe2 extends Aufgabe1 {
@@ -57,7 +62,8 @@ public class Aufgabe2 extends Aufgabe1 {
 		System.out.println(barList);
 		System.out.println(mixList);
 		// TODO fields arent generated correctly, as it's an array of nulls currently	
-//		for (Buh b: mixField) System.out.print(b + " ");
+		for (Buh b: mixField) System.out.print(b + " ");
+		System.out.println();
 		
 		Stream mixListStream = mixList.stream();
 		mixList.stream().filter(s -> (s.getClass() == Foo.class))
@@ -66,13 +72,14 @@ public class Aufgabe2 extends Aufgabe1 {
 		mixList.stream().filter(s -> (s.getClass() == Bar.class))
 			.forEach(s -> System.out.print(s + ","));
 		System.out.println();
+		
 	}
 	
 	public static <A extends Buh, B extends Buh> Buh[] mixFields(A[] f1, B[] f2) {
 		Buh[] ret = new Buh[f1.length + f2.length];
-		for (int i = 0; i < f1.length*2; i+=2) {
-			ret[i] = f1[i/2];
-			ret[i+1] = f2[i/2];
+		for (int i = 0, j = 0; i < f1.length+f2.length; j++, i+=2) {
+			ret[i] = f1[j];
+			ret[i+1] = f2[j];
 		}
 		return ret;
 	}
