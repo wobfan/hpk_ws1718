@@ -9,6 +9,7 @@ public class Aufgabe1 {
 		List<T> list = new ArrayList<T>(n);
 		for (int j = 0; j < n; j++) {
 			list.add(type.newInstance());
+			
 		}
 		return list;
 	}

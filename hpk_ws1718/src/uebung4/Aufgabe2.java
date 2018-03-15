@@ -42,7 +42,7 @@ class Bar extends Buh implements Comparable<Bar> {
 }
 
 public class Aufgabe2 extends Aufgabe1 {
-
+	Supplier
 	public static <T> T[] sort(T[] a) {
 		Arrays.sort(a);
 		return a;
